@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños! by AlexDev</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    
+     <!-- 
+
+Contáctame:
+
+    * Invitame un café
+ https://buymeacoffee.com/alexx.dev
+
+    * Portafolio Web
+ https://alexxdev.vercel.app
+
+    * Sigueme en tiktok
+ https://www.tiktok.com/@alexx.dev?is_from_webapp=1&sender_device=pc 
+ 
+    *Canal de WhatsApp
+ https://whatsapp.com/channel/0029VazQEXq90x2vIdNkrH1p
+
+ 
+ +52 1 55 6628 1018
+
+-->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka One', cursive, 'Segoe UI', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #69beff 0%, #69beff 100%);
+            overflow: hidden;
+            color: #4a4a4a;
+            cursor: crosshair !important;
+        }
+
+        .game-container {
+            width: 90%;
+            max-width: 800px;
+            height: 700px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 5px solid white;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #052663;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: #6c5ce7;
+            padding: 10px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+        .balloon-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .balloon {
+            width: 80px;
+            height: 100px;
+            background-image: url('textura.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .balloon-string {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background-color: black;
+            z-index: 1;
+        }
+
+        .pump-container {
+            margin-top: 20px;
+        }
+
+        .pump {
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(145deg, #fdcb6e, #ff7675);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            transition: transform 0.1s, box-shadow 0.1s;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+        .pump:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #ff7675, #fdcb6e);
+        }
+
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .result {
+            font-size: 3.5rem;
+            color: #e74c3c;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .birthday-card {
+            display: none; 
+            max-width: 90%;
+            max-height: 75%;
+            object-fit: contain; 
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeInScaleUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .restart-btn {
+            padding: 15px 30px;
+            background: linear-gradient(145deg, #fdcb6e, #ff7675);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+            margin-top: 20px;
+            position: relative; 
+            z-index: 11;
+            cursor: pointer;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .instructions {
+            margin-top: 15px;
+            text-align: center;
+            color: #8c7ae6;
+            font-size: 1.1rem;
+            max-width: 80%;
+        }
+
+        .click-count {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #a29bfe;
+        }
+        
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        
+        .exploded {
+            animation: explode 0.5s forwards;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #69beff;
+            opacity: 0;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 600px) {
+            .game-container { height: 95vh; }
+            h1 { font-size: 2rem; }
+            .timer { font-size: 1.5rem; }
+            .pump { width: 100px; height: 100px; font-size: 1.2rem; }
+            .result { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <audio id="pumpSound" src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-the-sound-pack-tree/tspt_game_sound_inflatable_mallet_hit_squish_002.mp3" preload="auto"></audio>
+    <audio id="popSound" src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-the-sound-pack-tree/tspt_game_sound_pop_bubble_032.mp3" preload="auto"></audio>
+
+    <div class="game-container">
+        <div class="header">
+            <h1 id="birthday-title">¡Happy Birthday Fea!</h1>
+            <div class="timer" id="timer">10</div>
+        </div>
+        
+        <div class="balloon-container" id="balloonContainer">
+            <div class="balloon" id="balloon">
+                <div class="balloon-string"></div>
+            </div>
+        </div>
+        
+        <div class="click-count" id="clickCount">Toques: 0</div>
+        
+        <div class="pump-container">
+            <div class="pump" id="pump">¡INFLAR!</div>
+        </div>
+        
+        <div class="instructions">
+            ¡Infla el globo antes de que se acabe el tiempo, si no lo haces no te doy los juegos de la nintendo😾!
+        </div>
+        
+        <div class="game-over" id="gameOver">
+            <img src="img/Tarjeta Carta de Feliz Cumpleaños Sencilla Roja.png" alt="Una carta de cumpleaños" id="birthdayCard" class="birthday-card">
+            <div class="result" id="result"></div>
+            <button class="restart-btn" id="restartBtn">Intentalo de nuevo, si quieres los juegos</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const balloon = document.getElementById('balloon');
+            const pump = document.getElementById('pump');
+            const timerElement = document.getElementById('timer');
+            const gameOverScreen = document.getElementById('gameOver');
+            const resultElement = document.getElementById('result');
+            const birthdayCard = document.getElementById('birthdayCard');
+            const restartBtn = document.getElementById('restartBtn');
+            const clickCountElement = document.getElementById('clickCount');
+            const birthdayTitle = document.getElementById('birthday-title');
+            const balloonContainer = document.getElementById('balloonContainer');
+            
+            const pumpSound = document.getElementById('pumpSound');
+            const popSound = document.getElementById('popSound');
+
+            let timer = 10;
+            let balloonSize = 1;
+            let maxBalloonSize = 26;
+            let clickCount = 0;
+            let gameActive = false;
+            let countdown;
+            
+            function personalizeGreeting() {
+                const name = prompt("¿Tu eresFea 🤍");
+                if (name) {
+                    birthdayTitle.textContent = `¡Happy Birthday, ${name}!`;
+                }
+            }
+
+            function startGame() {
+                timer = 10;
+                balloonSize = 1;
+                clickCount = 0;
+                gameActive = true;
+                
+                updateBalloon();
+                
+                timerElement.textContent = timer;
+                clickCountElement.textContent = `Toques: ${clickCount}`;
+                gameOverScreen.style.display = 'none';
+                birthdayCard.style.display = 'none';
+                resultElement.style.display = 'none';
+                balloon.classList.remove('exploded');
+                balloon.style.display = 'block';
+
+                clearInterval(countdown);
+                countdown = setInterval(() => {
+                    timer--;
+                    timerElement.textContent = timer;
+                    if (timer <= 0) {
+                        endGame(false);
+                    }
+                }, 2000);
+            }
+
+            function updateBalloon() {
+                const size = 80 + (balloonSize * 8);
+                balloon.style.width = `${size}px`;
+                balloon.style.height = `${size * 1.3}px`;
+                
+                if (balloonSize >= maxBalloonSize) {
+                    endGame(true);
+                }
+            }
+            
+            function balloonExplosion() {
+                popSound.currentTime = 0;
+                popSound.play();
+                balloon.classList.add('exploded');
+                createConfetti();
+                setTimeout(() => {
+                    balloon.style.display = 'none';
+                }, 500);
+            }
+            
+            function createConfetti() {
+                const colors = ['#69beff', '#1e90ff', '#32cd32', '#ffd700', '#9370db', '#ff7f50'];
+                for (let i = 0; i < 150; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    const balloonRect = balloon.getBoundingClientRect();
+                    const containerRect = balloonContainer.getBoundingClientRect();
+
+                    confetti.style.left = `${(balloonRect.left - containerRect.left) + (balloonRect.width / 2)}px`;
+                    confetti.style.top = `${(balloonRect.top - containerRect.top) + (balloonRect.height / 2)}px`;
+                    
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    balloonContainer.appendChild(confetti);
+
+                    setTimeout(() => {
+                        confetti.style.opacity = '1';
+                        const x = (Math.random() - 0.5) * 500;
+                        const y = (Math.random() - 0.5) * 500;
+                        confetti.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 360}deg)`;
+                        confetti.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+                        
+                        setTimeout(() => {
+                            confetti.style.opacity = '0';
+                            setTimeout(() => balloonContainer.removeChild(confetti), 1000);
+                        }, 1000);
+                    }, 10);
+                }
+            }
+
+            function endGame(win) {
+                clearInterval(countdown);
+                if (!gameActive) return;
+                gameActive = false;
+
+                if (win) {
+                    balloonExplosion();
+                    setTimeout(() => {
+                        resultElement.style.display = 'none';
+                        birthdayCard.style.display = 'block';
+                        gameOverScreen.style.display = 'flex';
+                    }, 900);
+                } else {
+                    birthdayCard.style.display = 'none';
+                    resultElement.textContent = '¡Se acabó el tiempo! 😢';
+                    resultElement.style.display = 'block';
+                    gameOverScreen.style.display = 'flex';
+                }
+            }
+            
+            function inflateBalloon() {
+                if (!gameActive) return;
+
+                pumpSound.currentTime = 0;
+                pumpSound.play();
+
+                balloonSize += 0.25;
+                clickCount++;
+                
+                updateBalloon();
+                clickCountElement.textContent = `Toques: ${clickCount}`;
+
+                balloon.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    balloon.style.transform = 'scale(1)';
+                }, 100);
+            }
+
+            pump.addEventListener('click', inflateBalloon);
+            restartBtn.addEventListener('click', startGame);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    inflateBalloon();
+                }
+            });
+
+            personalizeGreeting();
+            startGame();
+        });
+    </script>
+</body>
+
+ <!-- 
+
+Contáctame:
+
+    * Invitame un café
+ https://buymeacoffee.com/alexx.dev
+
+    * Portafolio Web
+ https://alexxdev.vercel.app
+
+    * Sigueme en tiktok
+ https://www.tiktok.com/@alexx.dev?is_from_webapp=1&sender_device=pc 
+ 
+    *Canal de WhatsApp
+ https://whatsapp.com/channel/0029VazQEXq90x2vIdNkrH1p
+
+ 
+ +52 1 55 6628 1018
+
+-->
+</html>
